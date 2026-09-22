@@ -60,6 +60,89 @@ of four backends:
 The local backend is zero-shot on purpose, not fine-tuned — see **Known
 weaknesses** for why, and what a fine-tuned classifier would change.
 
+## Cascade: confidence-gated local→hosted routing
+
+Everything above measures each backend in isolation — one point per backend.
+`edgefront cascade` measures something different: **try the local model
+first, and only call the hosted model when the local prediction's own
+confidence is below a threshold.** Pick the threshold well and you get most
+of the hosted model's accuracy while paying the hosted price on only the
+fraction of calls that actually needed it.
+
+The threshold is exactly one number, and choosing it well means seeing the
+whole accuracy/latency/cost tradeoff it produces, not one point on it. Doing
+that naively would mean calling the hosted backend once per threshold — for a
+10-point curve, that is 10x the hosted cost and 10x the wait, and every point
+after the first is measured under whatever the hosted network position
+happens to be at that moment (see "Three things worth carrying forward
+honestly" above). Instead, `edgefront cascade`:
+
+1. runs the local backend once over every example,
+2. runs the hosted backend once over every example,
+3. caches both raw prediction lists, then
+4. for each threshold, decides per example — in pure Python, no more model
+   calls — whether that example's local confidence would have cleared the
+   bar, and blends accuracy/ECE/latency/cost accordingly.
+
+So a whole cost-accuracy frontier costs exactly one local pass plus one
+hosted pass, however many thresholds you sweep. As far as we know, nothing in
+the Jev/typed-decision-model ecosystem publishes this curve — everything else
+here (and everywhere else we've seen) reports one point per backend, not a
+frontier over a routing knob. A prediction with no confidence signal at all
+(this can happen with `jev` — see `Prediction.confidence`) always escalates:
+you cannot gate a decision on a signal you don't have.
+
+The two passes don't need to happen together, either. `edgefront bench
+--save-predictions DIR` writes each backend's raw per-example predictions to
+disk; `edgefront cascade --local-predictions ... --hosted-predictions ...`
+sweeps two such files with no model calls, no network, and no optional
+dependency at all — so the local pass can run on a GPU (Kaggle, say) and the
+hosted pass can run later, wherever the API key lives, exactly like `edgefront
+merge` does one level up for aggregate results.
+
+```bash
+# live: local and hosted backends run once each, in this process
+edgefront cascade --task synthetic --local rules --hosted stub \
+  --thresholds 0.1,0.26,0.7,1.01 --plot cascade.png
+
+# cross-machine: sweep two prediction files with no model and no network
+edgefront bench --backends rules --save-predictions preds/       # e.g. on a GPU box
+edgefront bench --backends stub  --save-predictions preds/       # e.g. wherever the API key lives
+edgefront cascade --local-predictions preds/rules.predictions.json \
+                   --hosted-predictions preds/stub.predictions.json \
+                   --thresholds 0.1,0.26,0.7,1.01
+```
+
+**Mechanism demo on the toy task — not the real experiment.** `stub` is a
+free, deterministic fake (see `backends/stub.py`), not a real hosted model, so
+this is a demonstration that the routing and the free-sweep arithmetic work,
+not a finding about `rules` vs. hosted. Run for real, on `synthetic`, with
+`--local rules --hosted stub`:
+
+![Accuracy vs. latency for a local→hosted cascade on the synthetic task: pure local, pure hosted, and the swept threshold curve between them.](docs/charts/cascade_mechanism_demo.png)
+
+| backend | acc | ECE | p50 ms | p99 ms | $/1M | offline |
+|---|---:|---:|---:|---:|---:|:--:|
+| cascade@0.10 | 0.445 | 0.140 | 0.016 | 0.035 | 4.00e-04 | no |
+| cascade@0.26 | 0.825 | 0.144 | 0.022 | 0.042 | 0.266 | no |
+| cascade@0.70 | 0.820 | 0.130 | 0.023 | 0.042 | 0.289 | no |
+| cascade@1.01 | 0.755 | 0.127 | 0.026 | 0.051 | 0.462 | no |
+
+At `threshold=0.10` almost nothing escalates (this is essentially `rules`
+alone, 0.445); at `threshold=1.01` everything escalates (essentially `stub`
+alone, 0.755). The interesting point is `threshold=0.26`: `rules` on this
+task is either very confident (1.0, when it is usually right) or unconfident
+(0.25, on genuinely ambiguous tickets) — see `RulesBackend`'s flat-distribution
+fallback — so escalating only the unconfident quarter of calls reaches 0.825,
+*above either backend alone*, for a fraction of `stub`'s cost. Whether that
+pattern holds on a real task with a real hosted model is exactly what a real
+run of this command would tell you — the real banking77 hosted-vs-local
+cascade experiment (with the actual Jev API) is still pending; see Status.
+This does not contradict "backends run sequentially" in Design rules below —
+that rule is about *different* backends never running concurrently against
+each other; a cascade's local-then-hosted calls happen one after another
+inside a single backend's own `predict()`, for one example at a time.
+
 ## Results
 
 ### `synthetic` — 4 labels, 60 examples, Windows CPU, called from India
@@ -186,6 +269,8 @@ edgefront bench --task synthetic --backends rules,stub --json out.json
 edgefront report out.json --out BENCH.md
 edgefront verify out.json --min-acc 0.85 --max-p99 50
 edgefront merge run_a.json run_b.json --json merged.json  # combine runs from different machines
+edgefront cascade --task synthetic --local rules --hosted stub \
+  --thresholds 0.1,0.3,0.5,0.7,0.9 --json cascade.json --plot cascade.png
 ```
 
 `verify` exits 1 when a threshold is missed, so it drops straight into CI.
@@ -196,6 +281,13 @@ plus a hosted backend benchmarked wherever that key lives (see
 `kaggle_job/`). It refuses to merge documents that ran a different number of
 examples, or that both contain the same backend name, since either would make
 the resulting gap meaningless rather than just imprecise.
+
+`cascade` sweeps a confidence threshold across a local→hosted cascade — see
+**Cascade** above. `--local`/`--hosted` run live backends once each;
+`--local-predictions`/`--hosted-predictions` instead sweep two files written
+by `bench --save-predictions DIR`, with no model calls, no network, and (in
+that mode) no optional dependency at all. `--plot PATH` additionally writes a
+cost-accuracy frontier chart (needs `edgefront[plot]`).
 
 ### Backends
 
@@ -222,19 +314,28 @@ backends above from any HF sequence-classification checkpoint.
 Adding a backend means implementing two methods — `predict()` and `meta()`.
 See `src/edgefront/backends/stub.py`; it is the whole contract.
 
+`edgefront.cascade.CascadeBackend` is itself a `Backend` — wrapping a local
+and a hosted one behind a single confidence threshold — but it takes two
+already-built `Backend` objects in Python, not a `--backends` token: nesting
+two full backend specs inside one flat colon-delimited spec string is
+genuinely ambiguous with the convention above, so the cascade has its own
+subcommand (see **Cascade**) instead of extending this table's grammar.
+
 ### Install
 
 ```bash
-pip install edgefront            # core: stdlib only, runs bench/report/verify/merge
+pip install edgefront            # core: stdlib only, runs bench/report/verify/merge/cascade
 pip install 'edgefront[local]'   # local models (torch, onnxruntime, transformers)
 pip install 'edgefront[jev]'     # hosted backend (typesafe-sdk)
 pip install 'edgefront[tasks]'   # banking77 and other HF-dataset-backed tasks
-pip install 'edgefront[plot]'    # regenerate docs/charts/*.png
+pip install 'edgefront[plot]'    # regenerate docs/charts/*.png, or `cascade --plot`
 pip install 'edgefront[all]'
 ```
 
-The core install has no dependencies, so `report`, `verify` and `merge` run
-anywhere, including in CI with no model and no network.
+The core install has no dependencies, so `report`, `verify`, `merge` and
+`cascade` (including its cross-machine `--local-predictions`/
+`--hosted-predictions` mode) run anywhere, including in CI with no model and
+no network. Only `cascade --plot` needs `edgefront[plot]`.
 
 ## Status
 
@@ -246,9 +347,19 @@ and int8), `jev` — along with HF→ONNX→INT8 export (`edgefront.quantize`),
 merging multi-machine runs (`edgefront merge`), and a Kaggle job for
 label-heavy tasks that don't fit on a laptop CPU (`kaggle_job/`).
 
-Next: render the per-bucket calibration reliability curve that's already in
-every result JSON (`meta.reliability_curve`) into the markdown report, and a
-third task with a different shape (not intent classification) to check the
+New in this version: `edgefront cascade`, a confidence-gated local→hosted
+router with a free cost-accuracy threshold sweep (see **Cascade** above), and
+`edgefront bench --save-predictions` / `cascade --local-predictions
+--hosted-predictions` so the local and hosted passes can run on different
+machines. This has only been exercised on the offline `rules`/`stub`
+mechanism demo so far — the real cascade experiment (banking77, `rules` or a
+local NLI model vs. the actual Jev API) is next, and needs a GPU for the local
+pass and an API key for the hosted one, same as the plain hosted-vs-local
+comparison did.
+
+Also next: render the per-bucket calibration reliability curve that's already
+in every result JSON (`meta.reliability_curve`) into the markdown report, and
+a third task with a different shape (not intent classification) to check the
 label-count finding isn't an artifact of NLI specifically.
 
 ## License
