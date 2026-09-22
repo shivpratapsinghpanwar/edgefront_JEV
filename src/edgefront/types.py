@@ -65,6 +65,16 @@ class Prediction:
     def ok(self) -> bool:
         return self.error is None
 
+    def to_dict(self) -> dict:
+        return {
+            "label": self.label,
+            "latency_ms": self.latency_ms,
+            "probabilities": self.probabilities,
+            "confidence": self.confidence,
+            "est_input_tokens": self.est_input_tokens,
+            "error": self.error,
+        }
+
 
 @dataclass
 class BackendResult:

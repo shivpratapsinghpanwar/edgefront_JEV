@@ -84,6 +84,46 @@ def hosted_cost(
     )
 
 
+def cascade_cost(
+    local_p50_ms: float,
+    cost_model: CostModel,
+    hosted_avg_tokens_per_call: float,
+    hosted_price_per_mtok: float,
+    escalation_rate: float,
+) -> CostReport:
+    """Cost of a confidence-gated local->hosted cascade.
+
+    The local backend runs on every call - it always pays its (amortised)
+    local cost. The hosted backend runs only on the fraction of calls that
+    escalated. So the blended per-call cost is the local cost plus the hosted
+    cost scaled by how often escalation actually happened - arithmetic on the
+    two existing, unchanged cost functions above, not a new cost model.
+    """
+    local_component = local_cost(local_p50_ms, cost_model)
+    hosted_component = hosted_cost(
+        total_input_tokens=round(hosted_avg_tokens_per_call),
+        n_calls=1,
+        price_per_mtok=hosted_price_per_mtok,
+    )
+    per_call = (
+        local_component.usd_per_call + escalation_rate * hosted_component.usd_per_call
+    )
+    return CostReport(
+        usd_per_call=per_call,
+        usd_per_million_calls=per_call * 1_000_000,
+        basis=(
+            f"local always runs ({local_component.basis}) "
+            f"plus hosted on {escalation_rate:.1%} of calls "
+            f"({hosted_component.basis})"
+        ),
+        assumptions={
+            "local": local_component.assumptions,
+            "hosted": hosted_component.assumptions,
+            "escalation_rate": escalation_rate,
+        },
+    )
+
+
 def local_cost(p50_ms: float, model: CostModel) -> CostReport:
     per_call = model.local_usd_per_call(p50_ms)
     return CostReport(
