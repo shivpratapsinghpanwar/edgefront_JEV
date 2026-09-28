@@ -20,7 +20,7 @@ import sys
 import time
 from pathlib import Path
 
-EDGEFRONT_REPO = "git+https://github.com/shivpratapsinghpanwar/edgefront.git"
+EDGEFRONT_REPO = "git+https://github.com/shivpratapsinghpanwar/edgefront_JEV.git"
 MODEL_NAME = "typeform/distilbert-base-uncased-mnli"
 N_EXAMPLES = 300
 OUT_DIR = Path("/kaggle/working")

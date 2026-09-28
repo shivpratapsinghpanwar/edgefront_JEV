@@ -1,7 +1,7 @@
 # edgefront JEV
 
 [![PyPI](https://img.shields.io/pypi/v/edgefront)](https://pypi.org/project/edgefront/)
-[![CI](https://github.com/shivpratapsinghpanwar/edgefront/actions/workflows/ci.yml/badge.svg)](https://github.com/shivpratapsinghpanwar/edgefront/actions/workflows/ci.yml)
+[![CI](https://github.com/shivpratapsinghpanwar/edgefront_JEV/actions/workflows/ci.yml/badge.svg)](https://github.com/shivpratapsinghpanwar/edgefront_JEV/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Do you need a hosted decision model, or does a small local model match it?
@@ -445,7 +445,7 @@ no network. Only `cascade --plot` needs `edgefront[plot]`.
 
 `cascade` and `export` arrive in 0.1.1. If `pip install edgefront` gives you
 0.1.0, install from GitHub instead:
-`pip install "edgefront[all] @ git+https://github.com/shivpratapsinghpanwar/edgefront"`.
+`pip install "edgefront[all] @ git+https://github.com/shivpratapsinghpanwar/edgefront_JEV"`.
 
 ### When something goes wrong
 
@@ -461,7 +461,7 @@ no network. Only `cascade --plot` needs `edgefront[plot]`.
 
 Exit codes: `0` ok, `1` a `verify` threshold failed, `2` bad usage or missing
 dependency. Anything else, a traceback, or a number that looks wrong is a bug:
-please [open an issue](https://github.com/shivpratapsinghpanwar/edgefront/issues)
+please [open an issue](https://github.com/shivpratapsinghpanwar/edgefront_JEV/issues)
 with the command, the output, and `pip show edgefront`.
 
 ## Status

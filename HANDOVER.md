@@ -10,7 +10,7 @@ examples, label space and wording through every backend and reports accuracy,
 calibration error, the latency distribution and cost per million calls, then
 prints a verdict.
 
-Repo: https://github.com/shivpratapsinghpanwar/edgefront · MIT · CI green on 3.10 + 3.12.
+Repo: https://github.com/shivpratapsinghpanwar/edgefront_JEV · MIT · CI green on 3.10 + 3.12.
 
 ## What already works
 

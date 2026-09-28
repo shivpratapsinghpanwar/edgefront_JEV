@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/shivpratapsinghpanwar/edgefront"
+Homepage = "https://github.com/shivpratapsinghpanwar/edgefront_JEV"
 
 [project.scripts]
 edgefront = "edgefront.cli:main"
