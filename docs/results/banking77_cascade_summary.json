@@ -1,0 +1,505 @@
+{
+  "task": "banking77",
+  "n_examples": 300,
+  "split": "test",
+  "seed": 0,
+  "source_files": {
+    "local_torch_cuda": "kaggle_job/cascade/run_banking77_cascade.py (Kaggle T4)",
+    "local_onnx_int8_cpu": "kaggle_job/cascade/run_banking77_cascade.py (Kaggle, CPU provider)",
+    "hosted_jev": "edgefront bench --task banking77 --backends jev --limit 300 (local machine)"
+  },
+  "pure_backend_reference": {
+    "rules": 0.293,
+    "distilbert_mnli_torch_cuda_fp32": 0.193,
+    "distilbert_mnli_onnx_int8_cpu": 0.167,
+    "jev_hosted": 0.79
+  },
+  "confidence_informativeness": {
+    "torch_cuda_fp32": [
+      {
+        "quartile": 1,
+        "confidence_range": [
+          0.052,
+          0.197
+        ],
+        "mean_confidence": 0.132,
+        "n": 75,
+        "accuracy": 0.12
+      },
+      {
+        "quartile": 2,
+        "confidence_range": [
+          0.198,
+          0.279
+        ],
+        "mean_confidence": 0.239,
+        "n": 75,
+        "accuracy": 0.213
+      },
+      {
+        "quartile": 3,
+        "confidence_range": [
+          0.279,
+          0.419
+        ],
+        "mean_confidence": 0.335,
+        "n": 75,
+        "accuracy": 0.213
+      },
+      {
+        "quartile": 4,
+        "confidence_range": [
+          0.43,
+          0.921
+        ],
+        "mean_confidence": 0.576,
+        "n": 75,
+        "accuracy": 0.227
+      }
+    ],
+    "onnx_int8_cpu": [
+      {
+        "quartile": 1,
+        "confidence_range": [
+          0.046,
+          0.155
+        ],
+        "mean_confidence": 0.1,
+        "n": 75,
+        "accuracy": 0.107
+      },
+      {
+        "quartile": 2,
+        "confidence_range": [
+          0.155,
+          0.245
+        ],
+        "mean_confidence": 0.207,
+        "n": 75,
+        "accuracy": 0.133
+      },
+      {
+        "quartile": 3,
+        "confidence_range": [
+          0.248,
+          0.369
+        ],
+        "mean_confidence": 0.3,
+        "n": 75,
+        "accuracy": 0.187
+      },
+      {
+        "quartile": 4,
+        "confidence_range": [
+          0.372,
+          0.907
+        ],
+        "mean_confidence": 0.533,
+        "n": 75,
+        "accuracy": 0.24
+      }
+    ]
+  },
+  "cascade_sweep": {
+    "torch_cuda_fp32_to_jev": [
+      {
+        "threshold": 0.0,
+        "escalation_rate": 0.0,
+        "accuracy": 0.19333333333333333,
+        "ece": 0.128,
+        "p50_ms": 67.305,
+        "p99_ms": 142.38,
+        "usd_per_million_calls": 1.8083
+      },
+      {
+        "threshold": 0.05,
+        "escalation_rate": 0.0,
+        "accuracy": 0.19333333333333333,
+        "ece": 0.128,
+        "p50_ms": 67.305,
+        "p99_ms": 142.38,
+        "usd_per_million_calls": 1.8083
+      },
+      {
+        "threshold": 0.1,
+        "escalation_rate": 0.0667,
+        "accuracy": 0.24666666666666667,
+        "ece": 0.1293,
+        "p50_ms": 68.387,
+        "p99_ms": 564.26,
+        "usd_per_million_calls": 5.6331
+      },
+      {
+        "threshold": 0.15,
+        "escalation_rate": 0.15,
+        "accuracy": 0.30333333333333334,
+        "ece": 0.1351,
+        "p50_ms": 69.042,
+        "p99_ms": 954.64,
+        "usd_per_million_calls": 10.4141
+      },
+      {
+        "threshold": 0.2,
+        "escalation_rate": 0.2567,
+        "accuracy": 0.37333333333333335,
+        "ece": 0.144,
+        "p50_ms": 71.462,
+        "p99_ms": 1094.304,
+        "usd_per_million_calls": 16.5338
+      },
+      {
+        "threshold": 0.25,
+        "escalation_rate": 0.4,
+        "accuracy": 0.45,
+        "ece": 0.1647,
+        "p50_ms": 84.398,
+        "p99_ms": 1521.996,
+        "usd_per_million_calls": 24.7571
+      },
+      {
+        "threshold": 0.3,
+        "escalation_rate": 0.56,
+        "accuracy": 0.5433333333333333,
+        "ece": 0.1695,
+        "p50_ms": 408.067,
+        "p99_ms": 2069.45,
+        "usd_per_million_calls": 33.9367
+      },
+      {
+        "threshold": 0.35,
+        "escalation_rate": 0.66,
+        "accuracy": 0.6033333333333334,
+        "ece": 0.1643,
+        "p50_ms": 421.387,
+        "p99_ms": 2069.45,
+        "usd_per_million_calls": 39.6739
+      },
+      {
+        "threshold": 0.4,
+        "escalation_rate": 0.7333,
+        "accuracy": 0.6533333333333333,
+        "ece": 0.1549,
+        "p50_ms": 428.797,
+        "p99_ms": 2182.258,
+        "usd_per_million_calls": 43.8811
+      },
+      {
+        "threshold": 0.45,
+        "escalation_rate": 0.78,
+        "accuracy": 0.6666666666666666,
+        "ece": 0.1624,
+        "p50_ms": 432.712,
+        "p99_ms": 2182.258,
+        "usd_per_million_calls": 46.5585
+      },
+      {
+        "threshold": 0.5,
+        "escalation_rate": 0.85,
+        "accuracy": 0.7033333333333334,
+        "ece": 0.1557,
+        "p50_ms": 440.259,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 50.5745
+      },
+      {
+        "threshold": 0.55,
+        "escalation_rate": 0.8767,
+        "accuracy": 0.72,
+        "ece": 0.149,
+        "p50_ms": 443.833,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 52.1045
+      },
+      {
+        "threshold": 0.6,
+        "escalation_rate": 0.9167,
+        "accuracy": 0.7433333333333333,
+        "ece": 0.1382,
+        "p50_ms": 447.852,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 54.3993
+      },
+      {
+        "threshold": 0.65,
+        "escalation_rate": 0.9333,
+        "accuracy": 0.7566666666666667,
+        "ece": 0.1281,
+        "p50_ms": 450.037,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 55.3555
+      },
+      {
+        "threshold": 0.7,
+        "escalation_rate": 0.9467,
+        "accuracy": 0.7666666666666667,
+        "ece": 0.1213,
+        "p50_ms": 453.049,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 56.1205
+      },
+      {
+        "threshold": 0.75,
+        "escalation_rate": 0.9633,
+        "accuracy": 0.7733333333333333,
+        "ece": 0.1161,
+        "p50_ms": 453.562,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 57.0767
+      },
+      {
+        "threshold": 0.8,
+        "escalation_rate": 0.9767,
+        "accuracy": 0.7866666666666666,
+        "ece": 0.1036,
+        "p50_ms": 454.555,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 57.8417
+      },
+      {
+        "threshold": 0.85,
+        "escalation_rate": 0.9933,
+        "accuracy": 0.79,
+        "ece": 0.1023,
+        "p50_ms": 456.481,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 58.7979
+      },
+      {
+        "threshold": 0.9,
+        "escalation_rate": 0.9967,
+        "accuracy": 0.79,
+        "ece": 0.1028,
+        "p50_ms": 456.629,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 58.9891
+      },
+      {
+        "threshold": 0.95,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 457.813,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 59.1803
+      },
+      {
+        "threshold": 1.0,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 457.813,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 59.1803
+      },
+      {
+        "threshold": 1.01,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 457.813,
+        "p99_ms": 2479.768,
+        "usd_per_million_calls": 59.1803
+      }
+    ],
+    "onnx_int8_cpu_to_jev": [
+      {
+        "threshold": 0.0,
+        "escalation_rate": 0.0,
+        "accuracy": 0.16666666666666666,
+        "ece": 0.1261,
+        "p50_ms": 809.86,
+        "p99_ms": 1848.786,
+        "usd_per_million_calls": 21.7592
+      },
+      {
+        "threshold": 0.05,
+        "escalation_rate": 0.0133,
+        "accuracy": 0.17666666666666667,
+        "ece": 0.129,
+        "p50_ms": 813.111,
+        "p99_ms": 1864.127,
+        "usd_per_million_calls": 22.5241
+      },
+      {
+        "threshold": 0.1,
+        "escalation_rate": 0.13,
+        "accuracy": 0.25,
+        "ece": 0.1412,
+        "p50_ms": 845.641,
+        "p99_ms": 2164.458,
+        "usd_per_million_calls": 29.2175
+      },
+      {
+        "threshold": 0.15,
+        "escalation_rate": 0.24,
+        "accuracy": 0.3433333333333333,
+        "ece": 0.1366,
+        "p50_ms": 877.013,
+        "p99_ms": 2482.116,
+        "usd_per_million_calls": 35.5285
+      },
+      {
+        "threshold": 0.2,
+        "escalation_rate": 0.3467,
+        "accuracy": 0.41,
+        "ece": 0.1437,
+        "p50_ms": 923.524,
+        "p99_ms": 2482.116,
+        "usd_per_million_calls": 41.6481
+      },
+      {
+        "threshold": 0.25,
+        "escalation_rate": 0.51,
+        "accuracy": 0.49333333333333335,
+        "ece": 0.1619,
+        "p50_ms": 1060.214,
+        "p99_ms": 2482.116,
+        "usd_per_million_calls": 51.0189
+      },
+      {
+        "threshold": 0.3,
+        "escalation_rate": 0.6267,
+        "accuracy": 0.5866666666666667,
+        "ece": 0.1458,
+        "p50_ms": 1125.576,
+        "p99_ms": 2482.116,
+        "usd_per_million_calls": 57.7123
+      },
+      {
+        "threshold": 0.35,
+        "escalation_rate": 0.7333,
+        "accuracy": 0.65,
+        "ece": 0.1442,
+        "p50_ms": 1150.495,
+        "p99_ms": 2841.022,
+        "usd_per_million_calls": 63.832
+      },
+      {
+        "threshold": 0.4,
+        "escalation_rate": 0.8033,
+        "accuracy": 0.6866666666666666,
+        "ece": 0.1436,
+        "p50_ms": 1173.648,
+        "p99_ms": 2841.022,
+        "usd_per_million_calls": 67.848
+      },
+      {
+        "threshold": 0.45,
+        "escalation_rate": 0.8467,
+        "accuracy": 0.7133333333333334,
+        "ece": 0.1394,
+        "p50_ms": 1200.667,
+        "p99_ms": 2841.022,
+        "usd_per_million_calls": 70.3341
+      },
+      {
+        "threshold": 0.5,
+        "escalation_rate": 0.88,
+        "accuracy": 0.7366666666666667,
+        "ece": 0.1309,
+        "p50_ms": 1210.06,
+        "p99_ms": 3105.764,
+        "usd_per_million_calls": 72.2465
+      },
+      {
+        "threshold": 0.55,
+        "escalation_rate": 0.9067,
+        "accuracy": 0.7466666666666667,
+        "ece": 0.1276,
+        "p50_ms": 1215.094,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 73.7765
+      },
+      {
+        "threshold": 0.6,
+        "escalation_rate": 0.92,
+        "accuracy": 0.7533333333333333,
+        "ece": 0.125,
+        "p50_ms": 1218.036,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 74.5414
+      },
+      {
+        "threshold": 0.65,
+        "escalation_rate": 0.9467,
+        "accuracy": 0.7733333333333333,
+        "ece": 0.11,
+        "p50_ms": 1229.509,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 76.0713
+      },
+      {
+        "threshold": 0.7,
+        "escalation_rate": 0.96,
+        "accuracy": 0.7766666666666666,
+        "ece": 0.1098,
+        "p50_ms": 1230.903,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 76.8363
+      },
+      {
+        "threshold": 0.75,
+        "escalation_rate": 0.97,
+        "accuracy": 0.7766666666666666,
+        "ece": 0.112,
+        "p50_ms": 1231.671,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 77.41
+      },
+      {
+        "threshold": 0.8,
+        "escalation_rate": 0.99,
+        "accuracy": 0.7866666666666666,
+        "ece": 0.106,
+        "p50_ms": 1239.993,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 78.5575
+      },
+      {
+        "threshold": 0.85,
+        "escalation_rate": 0.9933,
+        "accuracy": 0.79,
+        "ece": 0.1033,
+        "p50_ms": 1241.012,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 78.7487
+      },
+      {
+        "threshold": 0.9,
+        "escalation_rate": 0.9967,
+        "accuracy": 0.79,
+        "ece": 0.1027,
+        "p50_ms": 1241.012,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 78.9399
+      },
+      {
+        "threshold": 0.95,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 1241.012,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 79.1312
+      },
+      {
+        "threshold": 1.0,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 1241.012,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 79.1312
+      },
+      {
+        "threshold": 1.01,
+        "escalation_rate": 1.0,
+        "accuracy": 0.79,
+        "ece": 0.103,
+        "p50_ms": 1241.012,
+        "p99_ms": 3207.661,
+        "usd_per_million_calls": 79.1312
+      }
+    ]
+  }
+}

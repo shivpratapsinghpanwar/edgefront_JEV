@@ -117,9 +117,19 @@ def plot_frontier(
     seen_kinds: list[str] = []
     for label, kind, acc, p50, cost, anchor in points:
         color = color_map[kind]
+        # Labeled (anchored) points get a higher zorder than unlabeled sweep
+        # points, and text gets higher still than any marker. A cascade sweep
+        # can legitimately land a threshold point on almost the same
+        # (p50, accuracy) spot as the local-only or hosted-only anchor it is
+        # converging toward (an escalation rate near 0% or 100% looks like
+        # "pure local"/"pure hosted") - without this, whichever point is
+        # drawn last (list order) silently paints over the other, sometimes
+        # hiding an anchor's color or clipping its label text underneath an
+        # unlabeled marker. Fixed z-order makes the layered look intentional
+        # (anchor on top) instead of an artifact of iteration order.
         ax.scatter(
             [p50], [acc], s=[size(cost)], color=color, alpha=0.85,
-            edgecolors="white", linewidths=1.2, zorder=3,
+            edgecolors="white", linewidths=1.2, zorder=4 if anchor is not None else 3,
         )
         if anchor is not None:
             ha, va, dx, dy = anchor
@@ -127,6 +137,7 @@ def plot_frontier(
                 f"{label}\nacc {acc:.0%} · ${cost:g}/1M",
                 (p50, acc), xytext=(dx, dy), textcoords="offset points",
                 fontsize=8.3, color=INK, va=va, ha=ha, fontfamily="monospace",
+                zorder=5,
             )
         if kind not in seen_kinds:
             seen_kinds.append(kind)

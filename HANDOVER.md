@@ -22,11 +22,16 @@ Repo: https://github.com/shivpratapsinghpanwar/edgefront · MIT · CI green on 3
   (torch zero-shot NLI), `onnx:<file>:<tokenizer>[:precision]`, `jev` (hosted).
 - `quantize/`: HF → ONNX export and dynamic INT8. Measured on
   `typeform/distilbert-base-uncased-mnli`: **267.9 MB → 67.3 MB, 4.0× smaller**.
-- 31 tests, all offline — no API key, no model, no network.
+- 49 tests, all offline — no API key, no model, no network.
 - `kaggle_job/`: standalone script, installs edgefront from GitHub, runs
   banking77 (77 labels) with `hf` on CUDA and `onnx` int8 on CPU. Pushed and
   run for real on Kaggle (`shivpratap0007/edgefront-banking77-local-backends`);
   result below.
+- `cascade`: confidence-gated local→hosted router plus a free threshold
+  sweep from one local pass + one hosted pass (`edgefront.cascade`,
+  `edgefront.predictions`). `kaggle_job/cascade/` is the sibling Kaggle job
+  that collects raw local predictions instead of an aggregate doc. Real
+  banking77 result below - the cascade is not a win on this task.
 
 ## The measured result so far
 
@@ -66,6 +71,44 @@ read 0.167 instead of 0.417 and looked plausible.
 checkpoint config, and is regression-tested (see item 1 below). It is the
 single most dangerous class of bug in this project: silently wrong rather
 than loudly wrong.
+
+### Real cascade experiment: banking77 local→hosted (done)
+
+`kaggle_job/cascade/run_banking77_cascade.py` ran on the same Kaggle T4,
+loading banking77 with the same `n=300, split=test, seed=0` as the published
+run, and wrote raw per-example predictions (`edgefront.predictions`) for both
+torch/CUDA fp32 and ONNX int8/CPU instead of an aggregate doc. `jev` ran
+locally (`edgefront bench --task banking77 --backends jev --limit 300
+--save-predictions`) and its 300 uid/gold pairs were verified to line up
+exactly with both Kaggle files before sweeping (`edgefront cascade
+--local-predictions ... --hosted-predictions ...`, 22 thresholds, free).
+
+**Verdict: the cascade is not a win here.** Local confidence is weakly
+informative — bucketing each local backend's own predictions into quartiles
+by its own confidence shows the top quartile is ~1.9-2.2x more accurate than
+the bottom quartile (torch: 0.120→0.227; ONNX int8: 0.107→0.240) — but the
+ceiling is low (even the most-confident quarter is only ~23-24% accurate) and
+the model is rarely confident at all (top decile confidence tops out around
+0.90-0.92). Getting within 3 points of jev's 0.790 needs escalating ~95% of
+calls either way, at which point there is not enough local traffic left to
+amortize the local pass's own cost:
+
+- ONNX int8/CPU (slow local pass, 810ms p50): threshold=0.65 reaches 0.773
+  (1.7-pt gap) at 94.7% escalation for **$76.1/1M — 33% more expensive than
+  just calling jev** ($57.4/1M). The cascade is strictly worse than not
+  bothering with the local pass at all.
+- torch/CUDA (cheap local pass, $1.68/1M alone): threshold=0.70 reaches 0.767
+  (2.3-pt gap) at 94.7% escalation for $56.1/1M, ~2% cheaper than jev — the
+  best point found anywhere in either sweep, and still a marginal win.
+
+Full sweeps: `docs/results/banking77_cascade_torch.json` and
+`banking77_cascade_onnx_int8.json`; compact summary + confidence buckets in
+`docs/results/banking77_cascade_summary.json`; charts in
+`docs/charts/banking77_cascade_frontier*.png`. See README's "The real
+experiment: banking77 local→hosted cascade" for the full writeup. The raw
+per-example prediction files (~1MB each) were kept locally, not committed —
+only the aggregate sweep documents and the summary are small enough to check
+in.
 
 ## Next, in order
 

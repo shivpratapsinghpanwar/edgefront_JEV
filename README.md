@@ -134,14 +134,92 @@ alone, 0.755). The interesting point is `threshold=0.26`: `rules` on this
 task is either very confident (1.0, when it is usually right) or unconfident
 (0.25, on genuinely ambiguous tickets) — see `RulesBackend`'s flat-distribution
 fallback — so escalating only the unconfident quarter of calls reaches 0.825,
-*above either backend alone*, for a fraction of `stub`'s cost. Whether that
-pattern holds on a real task with a real hosted model is exactly what a real
-run of this command would tell you — the real banking77 hosted-vs-local
-cascade experiment (with the actual Jev API) is still pending; see Status.
-This does not contradict "backends run sequentially" in Design rules below —
-that rule is about *different* backends never running concurrently against
-each other; a cascade's local-then-hosted calls happen one after another
-inside a single backend's own `predict()`, for one example at a time.
+*above either backend alone*, for a fraction of `stub`'s cost. `stub` is a
+free, deterministic fake, though, so this only demonstrates that the
+mechanism and the free-sweep arithmetic work — it says nothing about whether
+a real hosted model behaves the same way. That pattern does **not** hold on
+the real banking77/Jev cascade below; the mechanism demo's own optimism is
+part of why that distinction matters. This does not contradict "backends run
+sequentially" in Design rules below — that rule is about *different* backends
+never running concurrently against each other; a cascade's local-then-hosted
+calls happen one after another inside a single backend's own `predict()`, for
+one example at a time.
+
+### The real experiment: banking77 local→hosted cascade
+
+Both local backends from the banking77 comparison above score *below* the
+keyword baseline in isolation (0.193 torch/CUDA, 0.167 ONNX int8/CPU, vs
+0.293 for `rules`), so the honest question going in was not "how good is the
+cascade" but "does the local model's confidence carry any signal at all worth
+gating on." It does, weakly — and that weak signal is most of the story.
+
+**Is local confidence informative?** Bucket each local backend's own 300
+predictions into quartiles by its own reported confidence and look at
+accuracy within each bucket (computed directly from the raw predictions,
+`docs/results/banking77_cascade_summary.json`):
+
+| quartile (by local confidence) | torch/CUDA fp32: mean conf → acc | ONNX int8/CPU: mean conf → acc |
+|---|---:|---:|
+| Q1 (least confident) | 0.132 → 0.120 | 0.100 → 0.107 |
+| Q2 | 0.239 → 0.213 | 0.207 → 0.133 |
+| Q3 | 0.335 → 0.213 | 0.300 → 0.187 |
+| Q4 (most confident) | 0.576 → 0.227 | 0.533 → 0.240 |
+
+Confidence is directionally informative — the most-confident quarter of local
+predictions is genuinely more accurate than the least-confident quarter
+(roughly 1.9x for torch, 2.2x for ONNX int8) — but the ceiling is low: even
+the *most* confident local predictions are only ~23-24% accurate, and the
+model is rarely confident at all (its top decile of confidence tops out
+around 0.90-0.92, not the 0.99+ a well-calibrated 77-way classifier would hit
+on its easy cases). A threshold has almost nothing above ~0.4 to work with.
+
+![Accuracy vs. cost for a local→hosted cascade on banking77: ONNX int8/CPU local model escalating to Jev, swept over 22 thresholds from one local pass and one hosted pass.](docs/charts/banking77_cascade_frontier.png)
+
+| threshold | % escalated | accuracy | p50 ms | $/1M |
+|---:|---:|---:|---:|---:|
+| 0.00 (never) | 0.0% | 0.167 | 810 | 21.8 |
+| 0.20 | 34.7% | 0.410 | 924 | 41.7 |
+| 0.40 | 80.3% | 0.687 | 1174 | 67.9 |
+| 0.60 | 92.0% | 0.753 | 1218 | 74.5 |
+| **0.65** | **94.7%** | **0.773** | 1230 | **76.1** |
+| 0.80 | 99.0% | 0.787 | 1240 | 78.6 |
+| 1.01 (always) | 100.0% | 0.790 | 1241 | 79.1 |
+| *pure jev (reference)* | *n/a* | *0.790* | *391* | *57.4* |
+
+`threshold=0.65` is the first point within 3 accuracy points of pure `jev`
+(0.773 vs 0.790, a 1.7-pt gap) — but it gets there by escalating **94.7%** of
+calls, and the blended cost, **$76.1/1M, is 33% more expensive than just
+calling jev on every request ($57.4/1M)**. The ONNX int8/CPU local pass is
+slow (810 ms p50) enough that its own amortized cost is not negligible, so
+paying for it on every call *and* paying jev on 95% of calls is a strictly
+worse deal than skipping the local pass entirely.
+
+The faster torch/CUDA arm tells a less bad but still unflattering story
+(`docs/charts/banking77_cascade_frontier_torch.png`,
+`docs/results/banking77_cascade_torch.json`): its local pass is cheap enough
+($1.68/1M in isolation) that the blended cost can edge *below* pure jev —
+`threshold=0.70` reaches 0.767 (a 2.3-pt gap) at 94.7% escalation for
+$56.1/1M, about 2% cheaper than jev's $57.4/1M. That is the best this cascade
+does anywhere in the sweep: a ~2% cost saving for a ~2-point accuracy
+haircut, achieved by keeping only 5.3% of calls local.
+
+**Honest verdict: on banking77, this cascade is not a win.** The mechanism
+(free multi-point sweep from one local pass + one hosted pass) works exactly
+as designed — see the numbers above and the full sweep in
+`docs/results/banking77_cascade_*.json` — but the local model's confidence,
+while weakly informative, never gets high or reliable enough on enough
+examples to route a useful fraction of traffic away from the hosted model
+without a real accuracy cost. Once escalation exceeds ~90% (needed for
+anything close to jev's accuracy), there just isn't enough local traffic left
+to amortize the local pass's own cost, and for the slower ONNX int8/CPU arm
+that inversion makes the cascade actively *more* expensive than calling jev
+outright. A cascade is a good idea when the local model is a *decent but
+imperfect* answer that's confidently right most of the time; here the local
+model is mostly wrong (rules baseline beats it) and only weakly aware of
+when, which is close to the worst case for this routing strategy. This
+matches the project's running theme on banking77: the local zero-shot NLI
+approach simply does not work well at 77 labels, and gating on its confidence
+doesn't rescue that.
 
 ## Results
 
@@ -351,11 +429,16 @@ New in this version: `edgefront cascade`, a confidence-gated local→hosted
 router with a free cost-accuracy threshold sweep (see **Cascade** above), and
 `edgefront bench --save-predictions` / `cascade --local-predictions
 --hosted-predictions` so the local and hosted passes can run on different
-machines. This has only been exercised on the offline `rules`/`stub`
-mechanism demo so far — the real cascade experiment (banking77, `rules` or a
-local NLI model vs. the actual Jev API) is next, and needs a GPU for the local
-pass and an API key for the hosted one, same as the plain hosted-vs-local
-comparison did.
+machines. The real experiment now has a published answer too: on banking77,
+gating on the local model's confidence is not a win (see **The real
+experiment: banking77 local→hosted cascade** above) — confidence is weakly
+informative (top-quartile local predictions are ~2x more accurate than
+bottom-quartile) but never reliably high enough that a threshold can route
+away from `jev` without giving up several accuracy points, and for the slower
+ONNX int8/CPU local arm the blended cost ends up *higher* than just calling
+`jev` on every request. The torch/CUDA arm does edge out pure `jev` on cost
+(~2%) at a ~2-point accuracy cost, which is the best case found in the sweep,
+not a representative one.
 
 Also next: render the per-bucket calibration reliability curve that's already
 in every result JSON (`meta.reliability_curve`) into the markdown report, and

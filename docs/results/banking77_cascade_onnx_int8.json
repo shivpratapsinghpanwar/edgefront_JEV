@@ -1,0 +1,2630 @@
+{
+  "config": {
+    "cost_model": {
+      "amortise_years": 3.0,
+      "electricity_usd_per_kwh": 0.12,
+      "hardware_usd": 600.0,
+      "utilisation": 0.25,
+      "watts": 45.0
+    },
+    "limit": null,
+    "warmup": 3
+  },
+  "duration_s": 0.277,
+  "environment": {
+    "git_commit": "8c61efe",
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.0",
+    "utc_time": "2026-09-28T16:47:15Z"
+  },
+  "error": null,
+  "frontier": [
+    "cascade@0.00",
+    "cascade@0.05",
+    "cascade@0.10",
+    "cascade@0.15",
+    "cascade@0.20",
+    "cascade@0.25",
+    "cascade@0.30",
+    "cascade@0.35",
+    "cascade@0.40",
+    "cascade@0.45",
+    "cascade@0.50",
+    "cascade@0.55",
+    "cascade@0.60",
+    "cascade@0.65",
+    "cascade@0.70",
+    "cascade@0.80",
+    "cascade@0.85",
+    "cascade@0.90",
+    "cascade@0.95",
+    "cascade@1.00",
+    "cascade@1.01"
+  ],
+  "results": [
+    {
+      "accuracy": 0.16666666666666666,
+      "backend": "cascade@0.00",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.0,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 0.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 2.1759183708777272e-05,
+        "usd_per_million_calls": 21.7592
+      },
+      "ece": 0.1261,
+      "latency_ms": {
+        "count": 297,
+        "max": 2158.336,
+        "mean": 882.793,
+        "p50": 809.86,
+        "p90": 1177.212,
+        "p99": 1848.786,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.16796494698809775,
+      "meta": {
+        "escalation_rate": 0.0,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": 0.1026,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": 0.0742,
+            "count": 39
+          },
+          {
+            "accuracy": 0.0923,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": 0.1512,
+            "count": 65
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.246,
+            "count": 84
+          },
+          {
+            "accuracy": 0.1887,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3441,
+            "count": 53
+          },
+          {
+            "accuracy": 0.1739,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4426,
+            "count": 23
+          },
+          {
+            "accuracy": 0.25,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5433,
+            "count": 12
+          },
+          {
+            "accuracy": 0.25,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6374,
+            "count": 12
+          },
+          {
+            "accuracy": 0.5556,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7642,
+            "count": 9
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8346,
+            "count": 2
+          },
+          {
+            "accuracy": 1.0,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9067,
+            "count": 1
+          }
+        ],
+        "threshold": 0.0
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.17666666666666667,
+      "backend": "cascade@0.05",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.013333333333333334,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 1.3% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 2.2524143708777273e-05,
+        "usd_per_million_calls": 22.5241
+      },
+      "ece": 0.129,
+      "latency_ms": {
+        "count": 297,
+        "max": 2158.336,
+        "mean": 889.936,
+        "p50": 813.111,
+        "p90": 1179.306,
+        "p99": 1864.127,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.177252513729381,
+      "meta": {
+        "escalation_rate": 0.0133,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": 0.1143,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": 0.0772,
+            "count": 35
+          },
+          {
+            "accuracy": 0.0923,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": 0.1512,
+            "count": 65
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.246,
+            "count": 84
+          },
+          {
+            "accuracy": 0.1887,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3441,
+            "count": 53
+          },
+          {
+            "accuracy": 0.1739,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4426,
+            "count": 23
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5469,
+            "count": 13
+          },
+          {
+            "accuracy": 0.25,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6374,
+            "count": 12
+          },
+          {
+            "accuracy": 0.5556,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7642,
+            "count": 9
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8346,
+            "count": 2
+          },
+          {
+            "accuracy": 1.0,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9542,
+            "count": 4
+          }
+        ],
+        "threshold": 0.05
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.25,
+      "backend": "cascade@0.10",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.13,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 13.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 2.9217543708777272e-05,
+        "usd_per_million_calls": 29.2175
+      },
+      "ece": 0.1412,
+      "latency_ms": {
+        "count": 297,
+        "max": 3094.184,
+        "mean": 948.283,
+        "p50": 845.641,
+        "p90": 1301.835,
+        "p99": 2164.458,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.27077418175221973,
+      "meta": {
+        "escalation_rate": 0.13,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0923,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": 0.1512,
+            "count": 65
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.246,
+            "count": 84
+          },
+          {
+            "accuracy": 0.1887,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3441,
+            "count": 53
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4442,
+            "count": 24
+          },
+          {
+            "accuracy": 0.3125,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5481,
+            "count": 16
+          },
+          {
+            "accuracy": 0.2143,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6392,
+            "count": 14
+          },
+          {
+            "accuracy": 0.6364,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7543,
+            "count": 11
+          },
+          {
+            "accuracy": 0.25,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8598,
+            "count": 4
+          },
+          {
+            "accuracy": 0.8621,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9826,
+            "count": 29
+          }
+        ],
+        "threshold": 0.1
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.3433333333333333,
+      "backend": "cascade@0.15",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.24,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 24.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 3.552846370877727e-05,
+        "usd_per_million_calls": 35.5285
+      },
+      "ece": 0.1366,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1008.289,
+        "p50": 877.013,
+        "p90": 1441.804,
+        "p99": 2482.116,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.3645559707248019,
+      "meta": {
+        "escalation_rate": 0.24,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0625,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": 0.1786,
+            "count": 32
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.246,
+            "count": 84
+          },
+          {
+            "accuracy": 0.1887,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3441,
+            "count": 53
+          },
+          {
+            "accuracy": 0.2,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4436,
+            "count": 25
+          },
+          {
+            "accuracy": 0.3125,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5481,
+            "count": 16
+          },
+          {
+            "accuracy": 0.3125,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6375,
+            "count": 16
+          },
+          {
+            "accuracy": 0.6667,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7556,
+            "count": 12
+          },
+          {
+            "accuracy": 0.5,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8599,
+            "count": 6
+          },
+          {
+            "accuracy": 0.9107,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9835,
+            "count": 56
+          }
+        ],
+        "threshold": 0.15
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.41,
+      "backend": "cascade@0.20",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.3466666666666667,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 34.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 4.164814370877728e-05,
+        "usd_per_million_calls": 41.6481
+      },
+      "ece": 0.1437,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1057.419,
+        "p50": 923.524,
+        "p90": 1565.392,
+        "p99": 2482.116,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.4358384358193373,
+      "meta": {
+        "escalation_rate": 0.3467,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.246,
+            "count": 84
+          },
+          {
+            "accuracy": 0.1818,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3456,
+            "count": 55
+          },
+          {
+            "accuracy": 0.2222,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4448,
+            "count": 27
+          },
+          {
+            "accuracy": 0.2941,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5476,
+            "count": 17
+          },
+          {
+            "accuracy": 0.3125,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6375,
+            "count": 16
+          },
+          {
+            "accuracy": 0.6429,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7505,
+            "count": 14
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8636,
+            "count": 11
+          },
+          {
+            "accuracy": 0.9079,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9857,
+            "count": 76
+          }
+        ],
+        "threshold": 0.2
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.49333333333333335,
+      "backend": "cascade@0.25",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.51,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 51.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 5.101890370877728e-05,
+        "usd_per_million_calls": 51.0189
+      },
+      "ece": 0.1619,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1128.421,
+        "p50": 1060.214,
+        "p90": 1637.497,
+        "p99": 2482.116,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.5127703741689148,
+      "meta": {
+        "escalation_rate": 0.51,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0857,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.2762,
+            "count": 35
+          },
+          {
+            "accuracy": 0.1786,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.346,
+            "count": 56
+          },
+          {
+            "accuracy": 0.2258,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4452,
+            "count": 31
+          },
+          {
+            "accuracy": 0.2632,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5447,
+            "count": 19
+          },
+          {
+            "accuracy": 0.4211,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6358,
+            "count": 19
+          },
+          {
+            "accuracy": 0.6471,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7457,
+            "count": 17
+          },
+          {
+            "accuracy": 0.4706,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8535,
+            "count": 17
+          },
+          {
+            "accuracy": 0.9057,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9821,
+            "count": 106
+          }
+        ],
+        "threshold": 0.25
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.5866666666666667,
+      "backend": "cascade@0.30",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.6266666666666667,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 62.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 5.7712303708777276e-05,
+        "usd_per_million_calls": 57.7123
+      },
+      "ece": 0.1458,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1179.56,
+        "p50": 1125.576,
+        "p90": 1650.613,
+        "p99": 2482.116,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.5898050129142566,
+      "meta": {
+        "escalation_rate": 0.6267,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.1786,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.346,
+            "count": 56
+          },
+          {
+            "accuracy": 0.2258,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4452,
+            "count": 31
+          },
+          {
+            "accuracy": 0.3,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.543,
+            "count": 20
+          },
+          {
+            "accuracy": 0.4286,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.639,
+            "count": 21
+          },
+          {
+            "accuracy": 0.6667,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7449,
+            "count": 18
+          },
+          {
+            "accuracy": 0.4737,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8521,
+            "count": 19
+          },
+          {
+            "accuracy": 0.9111,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9829,
+            "count": 135
+          }
+        ],
+        "threshold": 0.3
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.65,
+      "backend": "cascade@0.35",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.7333333333333333,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 73.3% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 6.383198370877727e-05,
+        "usd_per_million_calls": 63.832
+      },
+      "ece": 0.1442,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1241.868,
+        "p50": 1150.495,
+        "p90": 1693.276,
+        "p99": 2841.022,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.635269721365978,
+      "meta": {
+        "escalation_rate": 0.7333,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.1667,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.3784,
+            "count": 24
+          },
+          {
+            "accuracy": 0.2121,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4445,
+            "count": 33
+          },
+          {
+            "accuracy": 0.3333,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5433,
+            "count": 21
+          },
+          {
+            "accuracy": 0.4091,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6409,
+            "count": 22
+          },
+          {
+            "accuracy": 0.619,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.748,
+            "count": 21
+          },
+          {
+            "accuracy": 0.5,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.85,
+            "count": 20
+          },
+          {
+            "accuracy": 0.9119,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9829,
+            "count": 159
+          }
+        ],
+        "threshold": 0.35
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.6866666666666666,
+      "backend": "cascade@0.40",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.8033333333333333,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 80.3% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 6.784802370877728e-05,
+        "usd_per_million_calls": 67.848
+      },
+      "ece": 0.1436,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1270.22,
+        "p50": 1173.648,
+        "p90": 1784.912,
+        "p99": 2841.022,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.6573899266714192,
+      "meta": {
+        "escalation_rate": 0.8033,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2059,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4459,
+            "count": 34
+          },
+          {
+            "accuracy": 0.3182,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5427,
+            "count": 22
+          },
+          {
+            "accuracy": 0.4348,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6408,
+            "count": 23
+          },
+          {
+            "accuracy": 0.6087,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7503,
+            "count": 23
+          },
+          {
+            "accuracy": 0.5455,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8495,
+            "count": 22
+          },
+          {
+            "accuracy": 0.9017,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9836,
+            "count": 173
+          }
+        ],
+        "threshold": 0.4
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7133333333333334,
+      "backend": "cascade@0.45",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.8466666666666667,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 84.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.033414370877728e-05,
+        "usd_per_million_calls": 70.3341
+      },
+      "ece": 0.1394,
+      "latency_ms": {
+        "count": 297,
+        "max": 3397.53,
+        "mean": 1296.16,
+        "p50": 1200.667,
+        "p90": 1821.277,
+        "p99": 2841.022,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.6889675259805129,
+      "meta": {
+        "escalation_rate": 0.8467,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.1905,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4648,
+            "count": 21
+          },
+          {
+            "accuracy": 0.3182,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5427,
+            "count": 22
+          },
+          {
+            "accuracy": 0.4167,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6429,
+            "count": 24
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7516,
+            "count": 24
+          },
+          {
+            "accuracy": 0.5455,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8495,
+            "count": 22
+          },
+          {
+            "accuracy": 0.9022,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9827,
+            "count": 184
+          }
+        ],
+        "threshold": 0.45
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7366666666666667,
+      "backend": "cascade@0.50",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.88,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 88.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.224654370877727e-05,
+        "usd_per_million_calls": 72.2465
+      },
+      "ece": 0.1309,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1319.223,
+        "p50": 1210.06,
+        "p90": 1844.182,
+        "p99": 3105.764,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7109290420978732,
+      "meta": {
+        "escalation_rate": 0.88,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2727,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4527,
+            "count": 11
+          },
+          {
+            "accuracy": 0.3182,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5427,
+            "count": 22
+          },
+          {
+            "accuracy": 0.4167,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6429,
+            "count": 24
+          },
+          {
+            "accuracy": 0.6538,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7541,
+            "count": 26
+          },
+          {
+            "accuracy": 0.5652,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.85,
+            "count": 23
+          },
+          {
+            "accuracy": 0.8953,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9824,
+            "count": 191
+          }
+        ],
+        "threshold": 0.5
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7466666666666667,
+      "backend": "cascade@0.55",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.9066666666666666,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 90.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.377646370877727e-05,
+        "usd_per_million_calls": 73.7765
+      },
+      "ece": 0.1276,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1336.721,
+        "p50": 1215.094,
+        "p90": 1850.063,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7222631625229028,
+      "meta": {
+        "escalation_rate": 0.9067,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.3571,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5514,
+            "count": 14
+          },
+          {
+            "accuracy": 0.4167,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6429,
+            "count": 24
+          },
+          {
+            "accuracy": 0.6296,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7547,
+            "count": 27
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8496,
+            "count": 25
+          },
+          {
+            "accuracy": 0.8969,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9825,
+            "count": 194
+          }
+        ],
+        "threshold": 0.55
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7533333333333333,
+      "backend": "cascade@0.60",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.92,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 92.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.454142370877728e-05,
+        "usd_per_million_calls": 74.5414
+      },
+      "ece": 0.125,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1343.109,
+        "p50": 1218.036,
+        "p90": 1850.063,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7296927459265121,
+      "meta": {
+        "escalation_rate": 0.92,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.542,
+            "count": 10
+          },
+          {
+            "accuracy": 0.44,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.644,
+            "count": 25
+          },
+          {
+            "accuracy": 0.6296,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7547,
+            "count": 27
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8496,
+            "count": 25
+          },
+          {
+            "accuracy": 0.8934,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9819,
+            "count": 197
+          }
+        ],
+        "threshold": 0.6
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7733333333333333,
+      "backend": "cascade@0.65",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.9466666666666667,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 94.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.607134370877727e-05,
+        "usd_per_million_calls": 76.0713
+      },
+      "ece": 0.11,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1354.61,
+        "p50": 1229.509,
+        "p90": 1850.063,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7412945526411008,
+      "meta": {
+        "escalation_rate": 0.9467,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6111,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6552,
+            "count": 18
+          },
+          {
+            "accuracy": 0.6296,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7547,
+            "count": 27
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8496,
+            "count": 25
+          },
+          {
+            "accuracy": 0.896,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9823,
+            "count": 202
+          }
+        ],
+        "threshold": 0.65
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7766666666666666,
+      "backend": "cascade@0.70",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.96,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 96.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.683630370877728e-05,
+        "usd_per_million_calls": 76.8363
+      },
+      "ece": 0.1098,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1360.206,
+        "p50": 1230.903,
+        "p90": 1850.063,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7428406256157452,
+      "meta": {
+        "escalation_rate": 0.96,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6296,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7547,
+            "count": 27
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8496,
+            "count": 25
+          },
+          {
+            "accuracy": 0.8976,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9825,
+            "count": 205
+          }
+        ],
+        "threshold": 0.7
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7766666666666666,
+      "backend": "cascade@0.75",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.97,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 97.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.741002370877727e-05,
+        "usd_per_million_calls": 77.41
+      },
+      "ece": 0.112,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1369.852,
+        "p50": 1231.671,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7359142186893383,
+      "meta": {
+        "escalation_rate": 0.97,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7568,
+            "count": 24
+          },
+          {
+            "accuracy": 0.5769,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.85,
+            "count": 26
+          },
+          {
+            "accuracy": 0.8986,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9826,
+            "count": 207
+          }
+        ],
+        "threshold": 0.75
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.7866666666666666,
+      "backend": "cascade@0.80",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.99,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 99.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.855746370877728e-05,
+        "usd_per_million_calls": 78.5575
+      },
+      "ece": 0.106,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1378.631,
+        "p50": 1239.993,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7413563955600866,
+      "meta": {
+        "escalation_rate": 0.99,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6667,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.75,
+            "count": 18
+          },
+          {
+            "accuracy": 0.5769,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.85,
+            "count": 26
+          },
+          {
+            "accuracy": 0.9014,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9825,
+            "count": 213
+          }
+        ],
+        "threshold": 0.8
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.79,
+      "backend": "cascade@0.85",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.9933333333333333,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 99.3% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.874870370877727e-05,
+        "usd_per_million_calls": 78.7487
+      },
+      "ece": 0.1033,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1379.958,
+        "p50": 1241.012,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.742345882263859,
+      "meta": {
+        "escalation_rate": 0.9933,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6667,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.75,
+            "count": 18
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.852,
+            "count": 25
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9826,
+            "count": 214
+          }
+        ],
+        "threshold": 0.85
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.79,
+      "backend": "cascade@0.90",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 0.9966666666666667,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 99.7% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.893994370877729e-05,
+        "usd_per_million_calls": 78.9399
+      },
+      "ece": 0.1027,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1381.325,
+        "p50": 1241.012,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7406929897018756,
+      "meta": {
+        "escalation_rate": 0.9967,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6316,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7474,
+            "count": 19
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8512,
+            "count": 24
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.9826,
+            "count": 214
+          }
+        ],
+        "threshold": 0.9
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.79,
+      "backend": "cascade@0.95",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 1.0,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 100.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.913118370877727e-05,
+        "usd_per_million_calls": 79.1312
+      },
+      "ece": 0.103,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1382.69,
+        "p50": 1241.012,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7406929897018756,
+      "meta": {
+        "escalation_rate": 1.0,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6316,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7474,
+            "count": 19
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8512,
+            "count": 24
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.983,
+            "count": 214
+          }
+        ],
+        "threshold": 0.95
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.79,
+      "backend": "cascade@1.00",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 1.0,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 100.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.913118370877727e-05,
+        "usd_per_million_calls": 79.1312
+      },
+      "ece": 0.103,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1382.69,
+        "p50": 1241.012,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7406929897018756,
+      "meta": {
+        "escalation_rate": 1.0,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6316,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7474,
+            "count": 19
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8512,
+            "count": 24
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.983,
+            "count": 214
+          }
+        ],
+        "threshold": 1.0
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    },
+    {
+      "accuracy": 0.79,
+      "backend": "cascade@1.01",
+      "cost": {
+        "assumptions": {
+          "escalation_rate": 1.0,
+          "hosted": {
+            "price_usd_per_mtok": 0.042
+          },
+          "local": {
+            "amortise_years": 3.0,
+            "electricity_usd_per_kwh": 0.12,
+            "hardware_usd": 600.0,
+            "utilisation": 0.25,
+            "watts": 45.0
+          }
+        },
+        "basis": "local always runs (amortised $600 over 3y at 25% utilisation, plus 45W at $0.12/kWh) plus hosted on 100.0% of calls (1366 input tok/call x $0.042/Mtok, output free)",
+        "usd_per_call": 7.913118370877727e-05,
+        "usd_per_million_calls": 79.1312
+      },
+      "ece": 0.103,
+      "latency_ms": {
+        "count": 297,
+        "max": 3486.172,
+        "mean": 1382.69,
+        "p50": 1241.012,
+        "p90": 1866.389,
+        "p99": 3207.661,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7406929897018756,
+      "meta": {
+        "escalation_rate": 1.0,
+        "kind": "cascade",
+        "offline": false,
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6316,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7474,
+            "count": 19
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8512,
+            "count": 24
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.983,
+            "count": 214
+          }
+        ],
+        "threshold": 1.01
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    }
+  ],
+  "schema_version": 1,
+  "stage": "cascade",
+  "success": true,
+  "task": {
+    "instructions": "",
+    "labels": [
+      "Refund_not_showing_up",
+      "activate_my_card",
+      "age_limit",
+      "apple_pay_or_google_pay",
+      "atm_support",
+      "automatic_top_up",
+      "balance_not_updated_after_bank_transfer",
+      "balance_not_updated_after_cheque_or_cash_deposit",
+      "beneficiary_not_allowed",
+      "cancel_transfer",
+      "card_about_to_expire",
+      "card_acceptance",
+      "card_arrival",
+      "card_delivery_estimate",
+      "card_linking",
+      "card_not_working",
+      "card_payment_fee_charged",
+      "card_payment_not_recognised",
+      "card_payment_wrong_exchange_rate",
+      "card_swallowed",
+      "cash_withdrawal_charge",
+      "cash_withdrawal_not_recognised",
+      "change_pin",
+      "compromised_card",
+      "contactless_not_working",
+      "country_support",
+      "declined_card_payment",
+      "declined_cash_withdrawal",
+      "declined_transfer",
+      "direct_debit_payment_not_recognised",
+      "disposable_card_limits",
+      "edit_personal_details",
+      "exchange_charge",
+      "exchange_rate",
+      "exchange_via_app",
+      "extra_charge_on_statement",
+      "failed_transfer",
+      "fiat_currency_support",
+      "get_disposable_virtual_card",
+      "get_physical_card",
+      "getting_spare_card",
+      "getting_virtual_card",
+      "lost_or_stolen_card",
+      "lost_or_stolen_phone",
+      "order_physical_card",
+      "passcode_forgotten",
+      "pending_card_payment",
+      "pending_cash_withdrawal",
+      "pending_top_up",
+      "pending_transfer",
+      "pin_blocked",
+      "receiving_money",
+      "request_refund",
+      "reverted_card_payment?",
+      "supported_cards_and_currencies",
+      "terminate_account",
+      "top_up_by_bank_transfer_charge",
+      "top_up_by_card_charge",
+      "top_up_by_cash_or_cheque",
+      "top_up_failed",
+      "top_up_limits",
+      "top_up_reverted",
+      "topping_up_by_card",
+      "transaction_charged_twice",
+      "transfer_fee_charged",
+      "transfer_into_account",
+      "transfer_not_received_by_recipient",
+      "transfer_timing",
+      "unable_to_verify_identity",
+      "verify_my_identity",
+      "verify_source_of_funds",
+      "verify_top_up",
+      "virtual_card_not_working",
+      "visa_or_mastercard",
+      "why_verify_identity",
+      "wrong_amount_of_cash_received",
+      "wrong_exchange_rate_for_cash_withdrawal"
+    ],
+    "n_examples": 300,
+    "name": "banking77",
+    "source": "artifacts/predictions/distilbert-mnli-onnx-int8-cpu.predictions.json + artifacts/predictions/jev.predictions.json"
+  },
+  "verdict": {
+    "detail": [
+      "no hosted/local pair was run, so no substitution verdict"
+    ],
+    "headline": "cascade@0.85 leads at 79.0% accuracy",
+    "recommended": "cascade@0.85",
+    "tolerance_pts": 3.0
+  }
+}

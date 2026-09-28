@@ -1,0 +1,229 @@
+{
+  "config": {
+    "cost_model": {
+      "amortise_years": 3.0,
+      "electricity_usd_per_kwh": 0.12,
+      "hardware_usd": 600.0,
+      "utilisation": 0.25,
+      "watts": 45.0
+    },
+    "limit": 300,
+    "warmup": 3
+  },
+  "duration_s": 149.798,
+  "environment": {
+    "git_commit": "8c61efe",
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "processor": "Intel64 Family 6 Model 142 Stepping 12, GenuineIntel",
+    "python": "3.13.0",
+    "utc_time": "2026-09-28T16:35:16Z"
+  },
+  "error": null,
+  "frontier": [
+    "jev"
+  ],
+  "results": [
+    {
+      "accuracy": 0.79,
+      "backend": "jev",
+      "cost": {
+        "assumptions": {
+          "price_usd_per_mtok": 0.042
+        },
+        "basis": "1366 input tok/call x $0.042/Mtok, output free",
+        "usd_per_call": 5.736668e-05,
+        "usd_per_million_calls": 57.3667
+      },
+      "ece": 0.103,
+      "latency_ms": {
+        "count": 297,
+        "max": 2727.996,
+        "mean": 499.897,
+        "p50": 380.528,
+        "p90": 702.636,
+        "p99": 2417.382,
+        "warmup_dropped": 3
+      },
+      "macro_f1": 0.7406929897018756,
+      "meta": {
+        "kind": "hosted",
+        "model": "jev-latest",
+        "note": "hosted latency is dominated by network position; see 'host' in the run environment block",
+        "offline": false,
+        "precision": "n/a",
+        "reliability_curve": [
+          {
+            "accuracy": null,
+            "bin_hi": 0.1,
+            "bin_lo": 0.0,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": null,
+            "bin_hi": 0.2,
+            "bin_lo": 0.1,
+            "confidence": null,
+            "count": 0
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.3,
+            "bin_lo": 0.2,
+            "confidence": 0.27,
+            "count": 1
+          },
+          {
+            "accuracy": 0.0,
+            "bin_hi": 0.4,
+            "bin_lo": 0.3,
+            "confidence": 0.38,
+            "count": 3
+          },
+          {
+            "accuracy": 0.2308,
+            "bin_hi": 0.5,
+            "bin_lo": 0.4,
+            "confidence": 0.4454,
+            "count": 13
+          },
+          {
+            "accuracy": 0.4545,
+            "bin_hi": 0.6,
+            "bin_lo": 0.5,
+            "confidence": 0.5418,
+            "count": 11
+          },
+          {
+            "accuracy": 0.6,
+            "bin_hi": 0.7,
+            "bin_lo": 0.6,
+            "confidence": 0.6507,
+            "count": 15
+          },
+          {
+            "accuracy": 0.6316,
+            "bin_hi": 0.8,
+            "bin_lo": 0.7,
+            "confidence": 0.7474,
+            "count": 19
+          },
+          {
+            "accuracy": 0.625,
+            "bin_hi": 0.9,
+            "bin_lo": 0.8,
+            "confidence": 0.8512,
+            "count": 24
+          },
+          {
+            "accuracy": 0.9019,
+            "bin_hi": 1.0,
+            "bin_lo": 0.9,
+            "confidence": 0.983,
+            "count": 214
+          }
+        ],
+        "vendor": "typesafe"
+      },
+      "n_errors": 0,
+      "n_predictions": 300
+    }
+  ],
+  "schema_version": 1,
+  "stage": "bench",
+  "success": true,
+  "task": {
+    "instructions": "What is the customer asking about",
+    "labels": [
+      "activate_my_card",
+      "age_limit",
+      "apple_pay_or_google_pay",
+      "atm_support",
+      "automatic_top_up",
+      "balance_not_updated_after_bank_transfer",
+      "balance_not_updated_after_cheque_or_cash_deposit",
+      "beneficiary_not_allowed",
+      "cancel_transfer",
+      "card_about_to_expire",
+      "card_acceptance",
+      "card_arrival",
+      "card_delivery_estimate",
+      "card_linking",
+      "card_not_working",
+      "card_payment_fee_charged",
+      "card_payment_not_recognised",
+      "card_payment_wrong_exchange_rate",
+      "card_swallowed",
+      "cash_withdrawal_charge",
+      "cash_withdrawal_not_recognised",
+      "change_pin",
+      "compromised_card",
+      "contactless_not_working",
+      "country_support",
+      "declined_card_payment",
+      "declined_cash_withdrawal",
+      "declined_transfer",
+      "direct_debit_payment_not_recognised",
+      "disposable_card_limits",
+      "edit_personal_details",
+      "exchange_charge",
+      "exchange_rate",
+      "exchange_via_app",
+      "extra_charge_on_statement",
+      "failed_transfer",
+      "fiat_currency_support",
+      "get_disposable_virtual_card",
+      "get_physical_card",
+      "getting_spare_card",
+      "getting_virtual_card",
+      "lost_or_stolen_card",
+      "lost_or_stolen_phone",
+      "order_physical_card",
+      "passcode_forgotten",
+      "pending_card_payment",
+      "pending_cash_withdrawal",
+      "pending_top_up",
+      "pending_transfer",
+      "pin_blocked",
+      "receiving_money",
+      "Refund_not_showing_up",
+      "request_refund",
+      "reverted_card_payment?",
+      "supported_cards_and_currencies",
+      "terminate_account",
+      "top_up_by_bank_transfer_charge",
+      "top_up_by_card_charge",
+      "top_up_by_cash_or_cheque",
+      "top_up_failed",
+      "top_up_limits",
+      "top_up_reverted",
+      "topping_up_by_card",
+      "transaction_charged_twice",
+      "transfer_fee_charged",
+      "transfer_into_account",
+      "transfer_not_received_by_recipient",
+      "transfer_timing",
+      "unable_to_verify_identity",
+      "verify_my_identity",
+      "verify_source_of_funds",
+      "verify_top_up",
+      "virtual_card_not_working",
+      "visa_or_mastercard",
+      "why_verify_identity",
+      "wrong_amount_of_cash_received",
+      "wrong_exchange_rate_for_cash_withdrawal"
+    ],
+    "n_examples": 500,
+    "name": "banking77",
+    "source": "legacy-datasets/banking77 test split, 500 examples, seed 0"
+  },
+  "verdict": {
+    "detail": [
+      "no hosted/local pair was run, so no substitution verdict"
+    ],
+    "headline": "jev leads at 79.0% accuracy",
+    "recommended": "jev",
+    "tolerance_pts": 3.0
+  }
+}

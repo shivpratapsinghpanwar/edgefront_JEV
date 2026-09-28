@@ -282,8 +282,23 @@ def cmd_cascade(args: argparse.Namespace) -> int:
         # their own task summary (written by predictions.save_predictions),
         # but only their labels/name, not the full TaskSpec.criteria this
         # command never needs. build_document() accepts a plain dict here.
+        # The task name itself IS worth recovering from the raw file (purely
+        # for a readable title on `--plot`'s chart and this doc's `task.name`)
+        # - peeked directly rather than widening load_predictions' return
+        # shape for every caller just for a label.
+        try:
+            task_name = (
+                json.loads(
+                    Path(args.local_predictions).read_text(encoding="utf-8")
+                )
+                .get("task", {})
+                .get("name")
+                or "cascade (loaded predictions)"
+            )
+        except Exception:
+            task_name = "cascade (loaded predictions)"
         task_doc = {
-            "name": "cascade (loaded predictions)",
+            "name": task_name,
             "instructions": "",
             "labels": sorted({ex.gold for ex in examples}),
             "n_examples": len(examples),

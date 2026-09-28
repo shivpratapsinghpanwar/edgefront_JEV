@@ -11,3 +11,5 @@ bench*.json
 BENCH.md
 .env
 models/
+artifacts/
+kaggle_output_cascade/
