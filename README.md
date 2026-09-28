@@ -341,6 +341,33 @@ no benchmark:
 
 ## Usage
 
+### From install to your own verdict
+
+```bash
+pip install 'edgefront[local,tasks]'
+
+# 1. Check the pipeline works - no key, no model, no network, a few seconds.
+edgefront bench --task synthetic --backends rules,stub
+
+# 2. Export a local model to ONNX fp32 + dynamic INT8 (downloads ~270 MB once).
+#    It prints the exact --backends string to use next.
+edgefront export --out models
+
+# 3. Benchmark the local models against the keyword baseline.
+edgefront bench --task banking77 --limit 100 --backends \
+  "rules,onnx:models/model.int8.onnx:typeform/distilbert-base-uncased-mnli:int8" \
+  --json local.json
+
+# 4. Add the hosted model (needs a key) and let edgefront give the verdict.
+pip install 'edgefront[jev]'
+export TYPESAFE_API_KEY=...        # PowerShell: $env:TYPESAFE_API_KEY="..."
+edgefront bench --task banking77 --limit 100 --backends \
+  "rules,jev,onnx:models/model.int8.onnx:typeform/distilbert-base-uncased-mnli:int8" \
+  --json bench.json --md BENCH.md
+```
+
+### Every command
+
 ```bash
 edgefront tasks                     # list decision tasks
 edgefront bench --task synthetic --backends rules,stub --json out.json
@@ -349,6 +376,7 @@ edgefront verify out.json --min-acc 0.85 --max-p99 50
 edgefront merge run_a.json run_b.json --json merged.json  # combine runs from different machines
 edgefront cascade --task synthetic --local rules --hosted stub \
   --thresholds 0.1,0.3,0.5,0.7,0.9 --json cascade.json --plot cascade.png
+edgefront export --model <hf-nli-model-id> --out models  # HF -> ONNX fp32 + INT8
 ```
 
 `verify` exits 1 when a threshold is missed, so it drops straight into CI.
@@ -384,10 +412,10 @@ but take any HuggingFace sequence-classification (NLI) checkpoint. `jev`
 defaults to TypeSafe's `jev-latest`. See **Models compared** above for what
 each one actually is.
 
-`edgefront.quantize` exports an HF checkpoint to ONNX and quantizes it to
-dynamic INT8 (`export_onnx`, `quantize_int8`) so you can produce the
+`edgefront export` (or `edgefront.quantize.export_onnx` / `quantize_int8` from
+Python) turns any HF sequence-classification checkpoint into the
 `onnx:model.onnx:tokenizer-id` and `onnx:model.int8.onnx:tokenizer-id:int8`
-backends above from any HF sequence-classification checkpoint.
+backends above. Absolute Windows paths (`onnx:C:\models\model.onnx:...`) work.
 
 Adding a backend means implementing two methods — `predict()` and `meta()`.
 See `src/edgefront/backends/stub.py`; it is the whole contract.
@@ -414,6 +442,27 @@ The core install has no dependencies, so `report`, `verify`, `merge` and
 `cascade` (including its cross-machine `--local-predictions`/
 `--hosted-predictions` mode) run anywhere, including in CI with no model and
 no network. Only `cascade --plot` needs `edgefront[plot]`.
+
+`cascade` and `export` arrive in 0.1.1. If `pip install edgefront` gives you
+0.1.0, install from GitHub instead:
+`pip install "edgefront[all] @ git+https://github.com/shivpratapsinghpanwar/edgefront"`.
+
+### When something goes wrong
+
+| you see | what it means |
+|---|---|
+| `TYPESAFE_API_KEY is not set` | hosted backend needs a key; use `--backends rules,stub` to test offline |
+| `typesafe-sdk is not installed` | `pip install 'edgefront[jev]'` |
+| `local backends need extra deps` | `pip install 'edgefront[local]'` |
+| `banking77 needs the datasets package` | `pip install 'edgefront[tasks]'` |
+| `matplotlib is required for --plot` | `pip install 'edgefront[plot]'` |
+| `unknown backend: ...` | check the token against the Backends table below |
+| local model scores below `rules` | not a bug - zero-shot NLI is weak on many-label tasks; see Results |
+
+Exit codes: `0` ok, `1` a `verify` threshold failed, `2` bad usage or missing
+dependency. Anything else, a traceback, or a number that looks wrong is a bug:
+please [open an issue](https://github.com/shivpratapsinghpanwar/edgefront/issues)
+with the command, the output, and `pip show edgefront`.
 
 ## Status
 

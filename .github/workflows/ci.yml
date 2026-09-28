@@ -7,16 +7,24 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ["3.10", "3.12"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.13"]
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e '.[dev]'
+      # Test the wheel a user would get from PyPI, not the source tree, so a
+      # file missing from the package fails here instead of on someone's laptop.
+      - run: pip install build && python -m build --wheel
+      - run: pip install dist/*.whl pytest ruff
       - run: ruff check src tests
       - run: pytest -q
       # the whole pipeline must run with no API key, no model, no network
@@ -25,3 +33,5 @@ jobs:
             --limit 40 --json bench.json
           edgefront report bench.json --out BENCH.md
           edgefront verify bench.json --min-acc 0.2
+          edgefront cascade --task synthetic --local rules --hosted stub \
+            --thresholds 0.3,0.7 --json cascade.json

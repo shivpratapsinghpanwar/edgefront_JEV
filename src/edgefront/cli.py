@@ -30,6 +30,7 @@ EXIT_FAILED_CHECK = 1
 EXIT_BAD_USAGE = 2
 
 _UNSAFE_FILENAME = re.compile(r"[^A-Za-z0-9_.-]+")
+_ONNX_SPEC = re.compile(r"^onnx:(.+?\.onnx):([^:]+)(?::([^:]+))?$", re.IGNORECASE)
 
 
 def _sanitize_filename(name: str) -> str:
@@ -76,15 +77,17 @@ def _build_backend(spec: str) -> Backend:
         return JevBackend()
     if name.startswith("onnx:"):
         # onnx:<model.onnx>:<tokenizer-id>[:precision]
-        parts = spec.split(":")
-        if len(parts) < 3:
+        # Anchored on ".onnx:" rather than split(":") so a Windows drive
+        # letter (onnx:C:\models\model.onnx:...) is not read as a separator.
+        m = _ONNX_SPEC.match(spec)
+        if not m:
             raise ValueError(
                 "onnx backend needs onnx:<model.onnx>:<tokenizer-id>[:precision]"
             )
         from .backends.onnx_local import ONNXLocalBackend
 
-        precision = parts[3] if len(parts) > 3 else "fp32"
-        return ONNXLocalBackend(parts[1], parts[2], precision=precision)
+        path, tokenizer, precision = m.group(1), m.group(2), m.group(3) or "fp32"
+        return ONNXLocalBackend(path, tokenizer, precision=precision)
     if name.startswith("hf:") or name == "hf":
         from .backends.hf_local import DEFAULT_MODEL, HFLocalBackend
 
@@ -206,6 +209,18 @@ def cmd_cascade(args: argparse.Namespace) -> int:
             file=sys.stderr,
         )
         return EXIT_BAD_USAGE
+    if args.plot:
+        # Checked up front: plot.py imports matplotlib lazily, so without this
+        # a missing extra would only surface after every model has already run.
+        try:
+            import matplotlib  # noqa: F401
+        except ImportError:
+            print(
+                "error: matplotlib is required for --plot. "
+                "pip install 'edgefront[plot]'",
+                file=sys.stderr,
+            )
+            return EXIT_BAD_USAGE
 
     try:
         thresholds = [float(t) for t in args.thresholds.split(",") if t.strip()]
@@ -350,15 +365,7 @@ def cmd_cascade(args: argparse.Namespace) -> int:
         print(f"markdown written to {args.md}")
 
     if args.plot:
-        try:
-            from .plot import draw_cascade
-        except ImportError:
-            print(
-                "error: matplotlib is required for --plot. "
-                "pip install 'edgefront[plot]'",
-                file=sys.stderr,
-            )
-            return EXIT_BAD_USAGE
+        from .plot import draw_cascade
 
         local_ok = [p for p in local_preds if p.ok]
         local_latency = summarise([p.latency_ms for p in local_ok], warmup=args.warmup)
@@ -478,6 +485,29 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return EXIT_FAILED_CHECK if failed else EXIT_OK
 
 
+def cmd_export(args: argparse.Namespace) -> int:
+    from .quantize import export_onnx, quantize_int8, size_mb
+
+    try:
+        fp32 = export_onnx(args.model, args.out, overwrite=args.overwrite)
+        print(f"fp32 model: {fp32} ({size_mb(fp32)} MB)")
+        specs = [f"onnx:{fp32}:{args.model}"]
+        if not args.no_int8:
+            int8 = quantize_int8(fp32)
+            print(f"int8 model: {int8} ({size_mb(int8)} MB)")
+            specs.append(f"onnx:{int8}:{args.model}:int8")
+    except ImportError:
+        print(
+            "error: export needs extra deps: pip install 'edgefront[local]'",
+            file=sys.stderr,
+        )
+        return EXIT_BAD_USAGE
+    print()
+    print("benchmark them with:")
+    print(f'  edgefront bench --task synthetic --backends "rules,{",".join(specs)}"')
+    return EXIT_OK
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="edgefront",
@@ -584,12 +614,34 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-p99", type=float, default=None)
     p.add_argument("--max-ece", type=float, default=None)
     p.set_defaults(func=cmd_verify)
+
+    p = sub.add_parser(
+        "export",
+        help="export a HuggingFace NLI model to ONNX fp32 + dynamic INT8",
+    )
+    p.add_argument(
+        "--model",
+        default="typeform/distilbert-base-uncased-mnli",
+        help="HuggingFace model id (an NLI / zero-shot checkpoint)",
+    )
+    p.add_argument("--out", default="models", help="output directory")
+    p.add_argument("--no-int8", action="store_true", help="skip INT8 quantization")
+    p.add_argument("--overwrite", action="store_true")
+    p.set_defaults(func=cmd_export)
     return parser
 
 
 def main() -> None:
     args = build_parser().parse_args()
-    sys.exit(args.func(args))
+    try:
+        code = args.func(args)
+    except FileNotFoundError as exc:
+        print(f"error: file not found: {exc.filename}", file=sys.stderr)
+        code = EXIT_BAD_USAGE
+    except json.JSONDecodeError as exc:
+        print(f"error: not a valid edgefront JSON document ({exc})", file=sys.stderr)
+        code = EXIT_BAD_USAGE
+    sys.exit(code)
 
 
 if __name__ == "__main__":
